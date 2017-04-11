@@ -1,0 +1,28 @@
+# ENUNCIADO
+
+Desarrollar una gramática en formato BNF para reconocer expresiones aritméticas simples (sumas, restas, multiplicaciones y divisiones) que operan con constantes enteras e identificadores 
+
+
+# RESOLUCIÓN
+
+### Notación BNF
+
+   <program>  ::= <sentence>
+   <sentence> ::= var id = int <op> int
+   <id>       ::= char
+   <op>	      ::= +|-|*|/
+
+### Gramática
+Ent = {<program>, <sentence>, <id>, <char>, <int>, <op>}
+Et  = {A.}
+
+
+
+G = (Ent, )
+
+EJEMPLO
+-------
+
+var F = 2 + 2
+
+
