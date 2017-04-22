@@ -2,27 +2,289 @@
 
 Desarrollar una gramática en formato BNF para reconocer expresiones aritméticas simples (sumas, restas, multiplicaciones y divisiones) que operan con constantes enteras e identificadores 
 
-
 # RESOLUCIÓN
 
 ### Notación BNF
+R =
 
-   <assign>     ::= id = <expression>
-   <expression> ::= <expresion> + <term>
-   <term>       ::= <factor>
-   <factor>     ::= int
+0)   <assign'>    ::= <assign> 
+1)   <assign>     ::= id = <expression>
+2)   <expression> ::= <expresion> + <term>
+3)   <expression> ::= <expresion> - <term>
+4)   <expression> ::= <term>
+5)   <term>       ::= <term> * <factor>
+6)   <term>       ::= <term> / <factor>
+/)   <term>       ::= <factor>
+7)   <factor>     ::= int
 
 ### Gramática
-Ent = {<program>, <sentence>, <id>, <char>, <int>, <op>}
-Et  = {A.}
+Ent = {<assign>, <expression>, <term>, <factor>}
+Et  = {id, =, +, -, *, /, int}
 
-
-
-G = (Ent, )
+G = (Ent, Et, <assign'>, R) # Libre de contexto
 
 EJEMPLO
 -------
 
-var F = 2 + 2
+var F = 2 + 2 * 3 / 2 - 2
 
 
+Tree
+----
+
+Step 1
+    <assign'>
+       |
+    <assign>
+
+Step 2
+        <assign'>
+           |
+        <assign>
+       /   |    \
+     id    =    <expression>
+
+ Step 3
+        <assign'>
+           |
+        <assign>
+       /   |    \
+     id    =    <expression>
+                /    |     \
+      <expression>   -    <term>
+
+Step 4
+        <assign'>
+           |
+        <assign>
+       /   |    \
+     id    =     <expression>
+                /     |      \
+      <expression>    -      <term>
+                               |
+                             <factor>
+
+Step 5
+        <assign'>
+           |
+        <assign>
+       /   |    \
+     id    =     <expression>
+                /     |      \
+      <expression>    -      <term>
+                                |
+                             <factor>
+                                |
+                               int
+
+Step 5
+            <assign'>
+               |
+            <assign>
+           /   |    \
+         id    =     <expression>
+                    /     |      \
+          <expression>    -      <term>
+         /     |     \              |
+ <expression>  +   <term>     <factor>
+                                    |
+                                   int
+
+Step 7
+            <assign'>
+               |
+            <assign>
+           /   |    \
+         id    =     <expression>
+                    /     |      \
+          <expression>    -      <term>
+         /     |     \              |
+ <expression>  +   <term>     <factor>
+                      |             |
+                  <factor>         int
+
+Step 8
+            <assign'>
+               |
+            <assign>
+           /   |    \
+         id    =     <expression>
+                    /     |      \
+          <expression>    -      <term>
+         /     |     \              |
+ <expression>  +   <term>     <factor>
+                      |             |
+                  <factor>         int
+                      |
+                     int 
+
+Step 8
+                            <assign'>
+                               |
+                            <assign>
+                           /   |    \
+                         id    =     <expression>
+                                    /     |      \
+                          <expression>    -      <term>
+                         /     |     \              |
+                 <expression>  +   <term>        <factor>
+                      |              |              |
+                    <term>        <factor>         int
+                   /  |   \          |                
+              <term>  *   <factor>  int            
+                                   
+ Step 8                                                                                     
+                             <assign'>
+                                |
+                             <assign>
+                            /   |    \
+                          id    =     <expression>
+                                     /     |      \
+                           <expression>    -      <term>
+                          /     |     \              |
+                  <expression>  +   <term>        <factor>
+                       |              |              |
+                     <term>        <factor>         int
+                    /  |   \          |                
+               <term>  *   <factor>  int            
+                              |
+                             int 
+
+Step 8                                                                                     
+                            <assign'>
+                               |
+                            <assign>
+                           /   |    \
+                         id    =     <expression>
+                                    /     |      \
+                          <expression>    -      <term>
+                         /     |     \              |
+                 <expression>  +   <term>        <factor>
+                      |              |              |
+                    <term>        <factor>         int
+                   /  |   \          |                
+              <term>  *   <factor>  int            
+             /  |   \        |
+         <term> / <factor>  int 
+
+Step 8                                                                                     
+                            <assign'>
+                               |
+                            <assign>
+                           /   |    \
+                         id    =     <expression>
+                                    /     |      \
+                          <expression>    -      <term>
+                         /     |     \              |
+                 <expression>  +   <term>        <factor>
+                      |              |              |
+                    <term>        <factor>         int
+                   /  |   \          |                
+              <term>  *   <factor>  int            
+             /  |   \        |
+         <term> / <factor>  int 
+                     |
+                    int 
+
+Step 8                                                                                     
+                            <assign'>
+                               |
+                            <assign>
+                           /   |    \
+                         id    =     <expression>
+                                    /     |      \
+                          <expression>    -      <term>
+                         /     |     \              |
+                 <expression>  +   <term>        <factor>
+                      |              |              |
+                    <term>        <factor>         int
+                   /  |   \          |                
+              <term>  *   <factor>  int            
+             /  |   \        |
+         <term> / <factor>  int 
+            |        |
+        <factor>    int 
+
+Step 8                                                                                     
+                            <assign'>
+                               |
+                            <assign>
+                           /   |    \
+                         id    =     <expression>
+                                    /     |      \
+                          <expression>    -      <term>
+                         /     |     \              |
+                 <expression>  +   <term>        <factor>
+                      |              |              |
+                    <term>        <factor>         int
+                   /  |   \          |              |  
+              <term>  *   <factor>  int             2
+             /  |   \        |       |
+         <term> / <factor>  int      2 
+            |        |       | 
+        <factor>    int      2
+            |        |
+           int       3 
+            |
+            2
+
+id = 2 / 3 * 2 + 2 - 2
+
+<< HASTA EL ARBOL ESTA BIEN REVISAR EL ANALISIS LEXICO >>
+
+ESTADO 0
+--------
+<assign'> ::= *<assign>
+
+(0, <assign>)
+ESTADO 1
+--------
+<assign> ::= *id = <expression>
+
+(1, id)
+ESTADO 2
+--------
+<assign> ::= id *= <expression>
+
+(2, =)
+ESTADO 3 <<<<<<<<<<<<<<<<<<<<<
+--------
+<assign> ::= id = *<expression>
+<expression> ::= *<expresion> + <term>
+<expression> ::= *<expresion> - <term>
+
+(3, <expresion>)
+ESTADO 4
+--------
+<assign> ::= id = <expression>*
+
+(3, <expresion>)
+ESTADO 5
+--------
+<expression> ::= <expresion> *+ <term>
+
+(5, +)
+ESTADO 6
+--------
+<expression> ::= <expresion> + *<term>
+<term>       ::= *<factor>
+<term>       ::= *<term> * <factor>
+<term>       ::= *<term> / <factor>(4, -)
+<factor>     ::= *int              
+
+(6, <term>)
+ESTADO 7
+--------
+<expression> ::= <expresion> + <term>*
+
+(6, <factor>)
+ESTADO 8
+--------
+<term> ::= <factor>* 
+
+(6, <term>)
+ESTADO 9
+--------
+<term>       ::= <term> ** <factor>
+<term>       ::= *<term> / <factor>(4, -)
+<factor>     ::= *int              
