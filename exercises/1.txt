@@ -7,10 +7,10 @@ Desarrollar una gramática en formato BNF para reconocer expresiones aritmética
 
 ### Notación BNF
 
-   <program>  ::= <sentence>
-   <sentence> ::= var id = int <op> int
-   <id>       ::= char
-   <op>	      ::= +|-|*|/
+   <assign>     ::= id = <expression>
+   <expression> ::= <expresion> + <term>
+   <term>       ::= <factor>
+   <factor>     ::= int
 
 ### Gramática
 Ent = {<program>, <sentence>, <id>, <char>, <int>, <op>}
