@@ -2,6 +2,10 @@
 
 Desarrollar una gramática en formato BNF para reconocer expresiones aritméticas simples (sumas, restas, multiplicaciones y divisiones) que operan con constantes enteras e identificadores 
 
+# ALGORITMO
+Cuando el pivote esta ante un Ent     -> Copiar las reglas de producción del Ent
+Cuando el pivote esta frente a un Ent -> Copiar las reglas de producción que avanzarian al mismo tiempo.
+
 # RESOLUCIÓN
 
 ### Notación BNF
@@ -235,56 +239,109 @@ id = 2 / 3 * 2 + 2 - 2
 ESTADO 0
 --------
 <assign'> ::= *<assign>
+<assign>  ::= *id = <expression>
 
 (0, <assign>)
 ESTADO 1
---------
-<assign> ::= *id = <expression>
+----
+ <assign'> ::= <assign>*
 
-(1, id)
+(0, id)
 ESTADO 2
 --------
-<assign> ::= id *= <expression>
+ <assign> ::= id *= <expression>
 
 (2, =)
-ESTADO 3 <<<<<<<<<<<<<<<<<<<<<
+ESTADO 3
 --------
-<assign> ::= id = *<expression>
-<expression> ::= *<expresion> + <term>
-<expression> ::= *<expresion> - <term>
+ <assign> ::= id = *<expression>
+ <expression> ::= *<expresion> - <term>
+ <expression> ::= *<expresion> + <term>
+ <expression> ::= *<term>
+ <term>       ::= *<term> * <factor>
+ <term>       ::= *<term> / <factor>
+ <term>       ::= *<factor>
+ <factor>     ::= *int
 
 (3, <expresion>)
 ESTADO 4
 --------
-<assign> ::= id = <expression>*
+ <assign> ::= id = <expression>*
+ <expression> ::= <expresion> *- <term>
+ <expression> ::= <expresion> *+ <term>
 
-(3, <expresion>)
+(3, <term>)
 ESTADO 5
 --------
-<expression> ::= <expresion> *+ <term>
+ <expression> ::= <term>*
+<term>       ::= <term> ** <factor>
+<term>       ::= <term> */ <factor>
 
-(5, +)
+(3, <factor>) (8, <factor>) (9, <factor>)
 ESTADO 6
 --------
-<expression> ::= <expresion> + *<term>
-<term>       ::= *<factor>
-<term>       ::= *<term> * <factor>
-<term>       ::= *<term> / <factor>(4, -)
-<factor>     ::= *int              
+ <term> ::= <factor>*
 
-(6, <term>)
+(3, int) (8, int) (9, int) (10, int (11, int))
 ESTADO 7
 --------
-<expression> ::= <expresion> + <term>*
+ <factor> ::= int*
 
-(6, <factor>)
+(4, -)
 ESTADO 8
 --------
-<term> ::= <factor>* 
+ <expression> ::= <expresion> - *<term>
+ <term>       ::= *<term> * <factor>
+ <term>       ::= *<term> / <factor>
+ <term>       ::= *<factor>
+ <factor>     ::= *int
 
-(6, <term>)
+(4, +)
 ESTADO 9
 --------
-<term>       ::= <term> ** <factor>
-<term>       ::= *<term> / <factor>(4, -)
-<factor>     ::= *int              
+ <expression> ::= <expresion> + *<term>
+ <term>       ::= *<term> * <factor>
+ <term>       ::= *<term> / <factor>
+ <term>       ::= *<factor>
+ <factor>     ::= *int
+
+
+(5, *) (12, *) (13, *)
+ESTADO 10
+---------
+ <term>   ::= <term> * *<factor>
+ <factor> ::= *int
+
+(5, /) (12, /) (13, *)
+ESTADO 11
+---------
+ <term>   ::= <term> / *<factor>
+ <factor> ::= *int
+
+(8, <term>)
+ESTADO 12
+---------
+ <expression> ::= <expresion> - <term>*
+ <term>       ::= <term> ** <factor>
+ <term>       ::= <term> */ <factor>
+
+(9, <term>)
+ESTADO 13
+---------
+ <expression> ::= <expresion> + <term>*
+ <term>       ::= <term> ** <factor>
+ <term>       ::= <term> */ <factor>
+
+(10, <factor>)
+ESTADO 14
+---------
+ <term>   ::= <term> * <factor>*
+
+(11, <factor>)
+ESTADO 15
+---------
+ <term>   ::= <term> / <factor>*
+
+|asd|asd|dasdasdsad|
+|gagsgd|asdasda|asdas|
+
