@@ -2,10 +2,6 @@
 
 Desarrollar una gramática en formato BNF para reconocer expresiones aritméticas simples (sumas, restas, multiplicaciones y divisiones) que operan con constantes enteras e identificadores 
 
-# ALGORITMO
-Cuando el pivote esta ante un Ent     -> Copiar las reglas de producción del Ent
-Cuando el pivote esta frente a un Ent -> Copiar las reglas de producción que avanzarian al mismo tiempo.
-
 # RESOLUCIÓN
 
 ### Notación BNF
