@@ -1,5 +1,8 @@
+%option noyywrap debug
+
 %{
-include <iostream>
+#include <iostream>
+#include "1.tab.h"
 
 using namespace std;
 
@@ -9,14 +12,13 @@ using namespace std;
 %%
 
 [ \t\n]         ;
-[0-9]+          { yylval.ival = atoi(yytext); return INT; }
-[a-zA-Z]+[0-9]* { yylval.sval = strdup(yytext); << endl; return ID; }
+[0-9]+          { yylval.sval = strdup(yytext); return INT; }
+[\+]            { yylval.sval = strdup(yytext); return PLUS; }
+[\-]            { yylval.sval = strdup(yytext); return MINUS; }
+[\*]            { yylval.sval = strdup(yytext); return MULT; }
+[\/]            { yylval.sval = strdup(yytext); return DIV; }
+[\=]            { yylval.sval = strdup(yytext); return EQUALS; }
+[a-zA-Z]+[0-9]* { yylval.sval = strdup(yytext); return ID; }
 .               ;
 
 %%
-
-int main(int, char**) 
-{
-    // lex through the input:
-    yylex();
-}
